@@ -4,6 +4,7 @@ const {
   Client,
   GatewayIntentBits,
   ActionRowBuilder,
+  StringSelectMenuBuilder,
   ButtonBuilder,
   ButtonStyle
 } = require('discord.js');
@@ -16,32 +17,40 @@ client.once('ready', () => {
   console.log(`Logged in as ${client.user.tag}`);
 });
 
-function makeButtons() {
+// 🔥 SELECT MENU
+function statusMenu() {
+  return new ActionRowBuilder().addComponents(
+    new StringSelectMenuBuilder()
+      .setCustomId('status_menu')
+      .setPlaceholder('do not touch !')
+      .addOptions(
+        { label: 'noted', description: 'noted', value: 'noted' },
+        { label: 'processing', description: 'processing', value: 'processing' },
+        { label: 'completed', description: 'completed', value: 'completed' }
+      )
+  );
+}
+
+// 🔥 AFTER COMPLETED (DISABLED BUTTON)
+function deliveredButton() {
   return new ActionRowBuilder().addComponents(
     new ButtonBuilder()
-      .setCustomId('noted')
-      .setLabel('noted')
-      .setStyle(ButtonStyle.Secondary),
-
-    new ButtonBuilder()
-      .setCustomId('processing')
-      .setLabel('processing')
-      .setStyle(ButtonStyle.Primary),
-
-    new ButtonBuilder()
-      .setCustomId('completed')
-      .setLabel('completed')
-      .setStyle(ButtonStyle.Success)
+      .setCustomId('done')
+      .setLabel('order has been delivered.')
+      .setStyle(ButtonStyle.Secondary)
+      .setDisabled(true)
   );
 }
 
 client.on('interactionCreate', async interaction => {
+
+  // 🔹 SLASH COMMAND
   if (interaction.isChatInputCommand()) {
     if (interaction.commandName !== 'listing') return;
 
     if (interaction.user.id !== process.env.OWNER_ID) {
       return interaction.reply({
-        content: '❌ ikaw lang pwede gumamit nito',
+        content: 'You do not have permission to use this.',
         ephemeral: true
       });
     }
@@ -75,45 +84,43 @@ _ _`;
 
     await queueChannel.send({
       content: message,
-      components: [makeButtons()]
+      components: [statusMenu()]
     });
   }
 
-  if (interaction.isButton()) {
+  // 🔹 SELECT MENU HANDLER
+  if (interaction.isStringSelectMenu()) {
+    if (interaction.customId !== 'status_menu') return;
+
     if (interaction.user.id !== process.env.OWNER_ID) {
       return interaction.reply({
-        content: '❌ bawal ka pindot',
+        content: 'You do not have permission to use this.',
         ephemeral: true
       });
     }
 
-    const status = interaction.customId;
+    const status = interaction.values[0];
 
-    let content = interaction.message.content.replace(
+    const content = interaction.message.content.replace(
       /order is being : __.*__/,
       `order is being : __${status}__`
     );
 
+    // 👉 COMPLETED → DISABLED BUTTON
     if (status === 'completed') {
-      const disabledRow = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setCustomId('done')
-          .setLabel('order has been delivered.')
-          .setStyle(ButtonStyle.Secondary)
-          .setDisabled(true)
-      );
-
       return interaction.update({
         content,
-        components: [disabledRow]
+        components: [deliveredButton()]
       });
     }
 
+    // 👉 NOT COMPLETED → KEEP MENU
     return interaction.update({
       content,
-      components: [makeButtons()]
+      components: [statusMenu()]
     });
   }
+
 });
 
 client.login(process.env.DISCORD_TOKEN);

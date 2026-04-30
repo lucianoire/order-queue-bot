@@ -13,8 +13,60 @@ const client = new Client({
   intents: [GatewayIntentBits.Guilds]
 });
 
-client.once('ready', () => {
+client.once('ready', async () => {
   console.log(`Logged in as ${client.user.tag}`);
+
+  const commands = [
+    {
+      name: 'queued',
+      description: 'Send queued notice'
+    },
+    {
+      name: 'mop',
+      description: 'Send GCash payment details',
+      options: [
+        {
+          name: 'item',
+          type: 3,
+          description: 'Item name',
+          required: true
+        },
+        {
+          name: 'price',
+          type: 10,
+          description: 'Price',
+          required: true
+        }
+      ]
+    },
+    {
+      name: 'listing',
+      description: 'Create purchase lineup listing',
+      options: [
+        { name: 'buyer', type: 6, description: 'Buyer', required: true },
+        { name: 'channel', type: 7, description: 'Channel', required: true },
+        { name: 'quantity', type: 4, description: 'Quantity', required: true },
+        { name: 'item', type: 3, description: 'Item name', required: true },
+        { name: 'mop', type: 3, description: 'Mode of payment', required: true },
+        { name: 'price', type: 10, description: 'Price', required: true },
+        {
+          name: 'status',
+          type: 3,
+          description: 'Order status',
+          required: true,
+          choices: [
+            { name: 'noted', value: 'noted' },
+            { name: 'processing', value: 'processing' },
+            { name: 'completed', value: 'completed' }
+          ]
+        },
+        { name: 'seller', type: 6, description: 'Seller', required: true }
+      ]
+    }
+  ];
+
+  await client.application.commands.set(commands);
+  console.log('Commands deployed');
 });
 
 function statusMenu() {
@@ -210,35 +262,5 @@ _ _`;
     });
   }
 });
-client.once('ready', async () => {
-  console.log(`Logged in as ${client.user.tag}`);
 
-  const commands = [
-    {
-      name: 'queued',
-      description: 'Send queued notice'
-    },
-    {
-      name: 'mop',
-      description: 'Send payment details',
-      options: [
-        {
-          name: 'item',
-          type: 3,
-          description: 'Item name',
-          required: true
-        },
-        {
-          name: 'price',
-          type: 3,
-          description: 'Item price',
-          required: true
-        }
-      ]
-    }
-  ];
-
-  await client.application.commands.set(commands);
-  console.log('Commands deployed');
-});
 client.login(process.env.DISCORD_TOKEN);

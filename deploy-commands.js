@@ -6,39 +6,15 @@ const commands = [
   new SlashCommandBuilder()
     .setName('listing')
     .setDescription('Create purchase lineup listing')
-    .addUserOption(option =>
-      option.setName('buyer')
-        .setDescription('Buyer')
-        .setRequired(true)
-    )
-    .addChannelOption(option =>
-      option.setName('channel')
-        .setDescription('Channel')
-        .setRequired(true)
-    )
-    .addIntegerOption(option =>
-      option.setName('quantity')
-        .setDescription('Quantity')
-        .setRequired(true)
-    )
-    .addStringOption(option =>
-      option.setName('item')
-        .setDescription('Item name')
-        .setRequired(true)
-    )
-    .addStringOption(option =>
-      option.setName('mop')
-        .setDescription('Mode of payment')
-        .setRequired(true)
-    )
-    .addNumberOption(option =>
-      option.setName('price')
-        .setDescription('Price')
-        .setRequired(true)
-    )
-    .addStringOption(option =>
-      option.setName('status')
-        .setDescription('Order status')
+    .addUserOption(o => o.setName('buyer').setDescription('Buyer').setRequired(true))
+    .addChannelOption(o => o.setName('channel').setDescription('Channel').setRequired(true))
+    .addIntegerOption(o => o.setName('quantity').setDescription('Quantity').setRequired(true))
+    .addStringOption(o => o.setName('item').setDescription('Item').setRequired(true))
+    .addStringOption(o => o.setName('mop').setDescription('MOP').setRequired(true))
+    .addNumberOption(o => o.setName('price').setDescription('Price').setRequired(true))
+    .addStringOption(o =>
+      o.setName('status')
+        .setDescription('Status')
         .setRequired(true)
         .addChoices(
           { name: 'noted', value: 'noted' },
@@ -46,16 +22,26 @@ const commands = [
           { name: 'completed', value: 'completed' }
         )
     )
-    .addUserOption(option =>
-      option.setName('seller')
-        .setDescription('Seller')
-        .setRequired(true)
-    ),
+    .addUserOption(o => o.setName('seller').setDescription('Seller').setRequired(true)),
 
   new SlashCommandBuilder()
     .setName('queued')
-    .setDescription('Send queued order notice')
-].map(command => command.toJSON());
+    .setDescription('Send queued notice'),
+
+  new SlashCommandBuilder()
+    .setName('mop')
+    .setDescription('Send GCash payment details')
+    .addStringOption(o =>
+      o.setName('item')
+        .setDescription('Item name')
+        .setRequired(true)
+    )
+    .addNumberOption(o =>
+      o.setName('price')
+        .setDescription('Price')
+        .setRequired(true)
+    )
+].map(c => c.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 

@@ -40,12 +40,54 @@ function deliveredButton() {
   );
 }
 
+function gcashButton() {
+  return new ActionRowBuilder().addComponents(
+    new ButtonBuilder()
+      .setCustomId('gcash_mop')
+      .setLabel('gcash')
+      .setStyle(ButtonStyle.Secondary)
+  );
+}
+
 client.on('interactionCreate', async interaction => {
   if (interaction.isChatInputCommand()) {
     if (interaction.user.id !== process.env.OWNER_ID) {
       return interaction.reply({
         content: 'You do not have permission to use this.',
         ephemeral: true
+      });
+    }
+
+    if (interaction.commandName === 'mop') {
+      const item = interaction.options.getString('item');
+      const price = interaction.options.getNumber('price');
+
+      const mopMessage = `_ _
+_ _ _ _ _ _ _ _ _ _ _ _             **gcɑsh ɗetɑils**
+_ _ _ _        𓎢𓎠𓎟<a:whitecross:1499062281013825618>𓎢𓎠𓎡<a:whitecross:1499062281013825618>𓎢𓎠𓎡
+_ _
+-# _ _     <:pearl:1483100606649602159> please send your proof of payment
+-# _ _     <:bend1:1485543789488508980> **no proof of payment = no process**
+-# _ _     <:pearl:1483100606649602159> kindly  double   check  the  amount
+-# _ _     <:bend1:1485543789488508980> before sending. **excess amt = no rf**
+-# _ _     <:pearl:1483100606649602159> payment   are   non   —   refundable
+-# _ _     <:bend1:1485543789488508980> once sent.  make sure you read the
+-# _ _     <:bend1:1485543789488508980> the     **[rules](https://discord.com/channels/1455613450935079109/1455613451903832269)**     before     availing. <a:kkk_pinkb:1499060602516148295> 
+
+-# _ _ _ _ _ _    <:xnl_whitecash:1499062274265059509> **press the button below for mop**
+
+-# _ _<:pearl:1483100606649602159> **item:** \`${item}\`
+-# _ _<:pearl:1483100606649602159> **price:** \`₱${price.toFixed(2)}\`
+_ _`;
+
+      await interaction.reply({
+        content: 'MOP details posted.',
+        ephemeral: true
+      });
+
+      return interaction.channel.send({
+        content: mopMessage,
+        components: [gcashButton()]
       });
     }
 
@@ -142,6 +184,29 @@ _ _`;
     return interaction.update({
       content,
       components: [statusMenu()]
+    });
+  }
+
+  if (interaction.isButton()) {
+    if (interaction.customId !== 'gcash_mop') return;
+
+    const gcashMessage = `_ _              ── ✧ ── ⋆ ── ✧ ──
+-# _ _                     **gcash   payment**
+-# _ _                   \`0992 989 0833\`
+-# _ _              (tap the number to copy)
+
+-# _ _   <:pearl:1483100606649602159>send   the  payment,  then  receipt
+-# _ _  <:bend1:1485543789488508980> right  after. **no proof = no process**
+-# _ _   <:pearl:1483100606649602159>forced refunds will have a ₱50 fee.
+-# _ _   <:pearl:1483100606649602159>don’t   send    via    gcash    protect, 
+-# _ _  <:bend1:1485543789488508980>  it      won’t      be      accepted[.](https://cdn.discordapp.com/attachments/1480092289232797789/1487036657231200266/IMG_9111.png?ex=69c7ae4e&is=69c65cce&hm=c9af89ec93e8daa9b1fca55dc12c3cba2ddbbafd22527b07fe4868ea7c02a007&)
+-# _ _   <:pearl:1483100606649602159>tips    are    always    appreciated <:pink:1480218642082697309> 
+_ _               ── ✧ ── ⋆ ── ✧ ──
+_ _`;
+
+    return interaction.reply({
+      content: gcashMessage,
+      ephemeral: true
     });
   }
 });

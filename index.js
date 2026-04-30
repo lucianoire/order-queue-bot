@@ -13,8 +13,51 @@ const client = new Client({
   intents: [GatewayIntentBits.Guilds]
 });
 
-client.once('ready', () => {
+client.once('ready', async () => {
   console.log(`Logged in as ${client.user.tag}`);
+
+  await client.application.commands.set([]);
+
+  const guild = await client.guilds.fetch(process.env.GUILD_ID);
+
+  await guild.commands.set([
+    { name: 'queued', description: 'Send queued notice' },
+    { name: 'completed', description: 'Send completed order notice' },
+    {
+      name: 'mop',
+      description: 'Send GCash payment details',
+      options: [
+        { name: 'item', type: 3, description: 'Item name', required: true },
+        { name: 'price', type: 10, description: 'Price', required: true }
+      ]
+    },
+    {
+      name: 'listing',
+      description: 'Create purchase lineup listing',
+      options: [
+        { name: 'buyer', type: 6, description: 'Buyer', required: true },
+        { name: 'channel', type: 7, description: 'Channel', required: true },
+        { name: 'quantity', type: 4, description: 'Quantity', required: true },
+        { name: 'item', type: 3, description: 'Item name', required: true },
+        { name: 'mop', type: 3, description: 'Mode of payment', required: true },
+        { name: 'price', type: 10, description: 'Price', required: true },
+        {
+          name: 'status',
+          type: 3,
+          description: 'Order status',
+          required: true,
+          choices: [
+            { name: 'noted', value: 'noted' },
+            { name: 'processing', value: 'processing' },
+            { name: 'completed', value: 'completed' }
+          ]
+        },
+        { name: 'seller', type: 6, description: 'Seller', required: true }
+      ]
+    }
+  ]);
+
+  console.log('Commands deployed');
 });
 
 function statusMenu() {
@@ -55,6 +98,23 @@ client.on('interactionCreate', async interaction => {
       return interaction.reply({
         content: 'You do not have permission to use this.',
         ephemeral: true
+      });
+    }
+
+    if (interaction.commandName === 'completed') {
+      const completedMessage = `‎ 
+‎ ‎        ‎ ‎ ‎ ‎ ‎ 𓈒⠀𓂃⠀⠀˖⠀<:pink_cross:1483503420349612215>   ⠀˖⠀⠀𓂃⠀𓈒
+‎  ‎ ‎ ‎ ‎         ‎ ‎ ‎ yay ! your order is now
+‎ ‎ ‎ ‎ ‎ ‎   ‎ ‎ ‎ ‎‎‎   ‎ ‎ ‎‎ ‎‎      ‎ ‎ ‎‎ ‎ ‎**__completed__**
+
+‎   ‎ <:000_1:1456193174002466924>type   **/vouch**  to  send   a vouch
+‎ ‎ ‎ ‎‎ <:000_1:1456193174002466924>vouch     within     **12hours**    only
+     <:bend1:1485543789488508980>or     warranty     will     be    void[.](https://cdn.discordapp.com/attachments/1480096108410568785/1492513162254090280/IMG_0263.png?ex=69db9ab3&is=69da4933&hm=9c727f4a944d3b7869eff674fa0545ad8dc6fa992c1ec8f71280bc89a7ff4b0a&)
+    <:000_1:1456193174002466924>tysm  for  trusting,  come  again!
+_ _`;
+
+      return interaction.reply({
+        content: completedMessage
       });
     }
 
@@ -205,8 +265,7 @@ _ _               ── ✧ ── ⋆ ── ✧ ──
 _ _`;
 
     return interaction.reply({
-      content: gcashMessage,
-      ephemeral: true
+      content: gcashMessage
     });
   }
 });

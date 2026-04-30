@@ -101,8 +101,8 @@ client.on('interactionCreate', async interaction => {
       });
     }
 
-    if (interaction.commandName === 'completed') {
-      const completedMessage = `‎ 
+if (interaction.commandName === 'completed') {
+  const completedMessage = `‎ 
 ‎ ‎        ‎ ‎ ‎ ‎ ‎ 𓈒⠀𓂃⠀⠀˖⠀<:pink_cross:1483503420349612215>   ⠀˖⠀⠀𓂃⠀𓈒
 ‎  ‎ ‎ ‎ ‎         ‎ ‎ ‎ yay ! your order is now
 ‎ ‎ ‎ ‎ ‎ ‎   ‎ ‎ ‎ ‎‎‎   ‎ ‎ ‎‎ ‎‎      ‎ ‎ ‎‎ ‎ ‎**__completed__**
@@ -113,11 +113,15 @@ client.on('interactionCreate', async interaction => {
     <:000_1:1456193174002466924>tysm  for  trusting,  come  again!
 _ _`;
 
-      return interaction.reply({
-        content: completedMessage
-      });
-    }
+  await interaction.reply({
+    content: 'Completed notice posted.',
+    ephemeral: true
+  });
 
+  return interaction.channel.send({
+    content: completedMessage
+  });
+}
     if (interaction.commandName === 'mop') {
       const item = interaction.options.getString('item');
       const price = interaction.options.getNumber('price');

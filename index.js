@@ -210,5 +210,35 @@ _ _`;
     });
   }
 });
+client.once('ready', async () => {
+  console.log(`Logged in as ${client.user.tag}`);
 
+  const commands = [
+    {
+      name: 'queued',
+      description: 'Send queued notice'
+    },
+    {
+      name: 'mop',
+      description: 'Send payment details',
+      options: [
+        {
+          name: 'item',
+          type: 3,
+          description: 'Item name',
+          required: true
+        },
+        {
+          name: 'price',
+          type: 3,
+          description: 'Item price',
+          required: true
+        }
+      ]
+    }
+  ];
+
+  await client.application.commands.set(commands);
+  console.log('Commands deployed');
+});
 client.login(process.env.DISCORD_TOKEN);

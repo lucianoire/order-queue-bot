@@ -1,67 +1,119 @@
 require('dotenv').config();
-const { REST, Routes, SlashCommandBuilder } = require('discord.js');
 
-const commands = [
-  new SlashCommandBuilder()
-    .setName('listing')
-    .setDescription('Create listing')
+const {
+  Client,
+  GatewayIntentBits,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle
+} = require('discord.js');
 
-    .addUserOption(o =>
-      o.setName('buyer')
-        .setDescription('Buyer')
-        .setRequired(true)
-    )
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds]
+});
 
-    .addChannelOption(o =>
-      o.setName('channel')
-        .setDescription('Channel')
-        .setRequired(true)
-    )
+client.once('ready', () => {
+  console.log(`Logged in as ${client.user.tag}`);
+});
 
-    .addIntegerOption(o =>
-      o.setName('quantity')
-        .setDescription('Quantity')
-        .setRequired(true)
-    )
+function makeButtons() {
+  return new ActionRowBuilder().addComponents(
+    new ButtonBuilder()
+      .setCustomId('noted')
+      .setLabel('noted')
+      .setStyle(ButtonStyle.Secondary),
 
-    .addStringOption(o =>
-      o.setName('item')
-        .setDescription('Item')
-        .setRequired(true)
-    )
+    new ButtonBuilder()
+      .setCustomId('processing')
+      .setLabel('processing')
+      .setStyle(ButtonStyle.Primary),
 
-    .addStringOption(o =>
-      o.setName('mop')
-        .setDescription('Mode of payment')
-        .setRequired(true)
-    )
-
-    .addNumberOption(o =>
-      o.setName('price')
-        .setDescription('Price')
-        .setRequired(true)
-    )
-
-    .addStringOption(o =>
-      o.setName('status')
-        .setDescription('Order status')
-        .setRequired(true)
-    )
-
-    .addUserOption(o =>
-      o.setName('seller')
-        .setDescription('Seller')
-        .setRequired(true)
-    )
-
-].map(c => c.toJSON());
-
-const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
-
-(async () => {
-  await rest.put(
-    Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID),
-    { body: commands }
+    new ButtonBuilder()
+      .setCustomId('completed')
+      .setLabel('completed')
+      .setStyle(ButtonStyle.Success)
   );
-  console.log('Commands deployed');
-})();
+}
+
+client.on('interactionCreate', async interaction => {
+  if (interaction.isChatInputCommand()) {
+    if (interaction.commandName !== 'listing') return;
+
+    if (interaction.user.id !== process.env.OWNER_ID) {
+      return interaction.reply({
+        content: '❌ ikaw lang pwede gumamit nito',
+        ephemeral: true
+      });
+    }
+
+    const buyer = interaction.options.getUser('buyer');
+    const channel = interaction.options.getChannel('channel');
+    const quantity = interaction.options.getInteger('quantity');
+    const item = interaction.options.getString('item');
+    const mop = interaction.options.getString('mop');
+    const price = interaction.options.getNumber('price');
+    const status = interaction.options.getString('status');
+    const seller = interaction.options.getUser('seller');
+
+    await interaction.reply({
+      content: '✅ Listing posted!',
+      ephemeral: true
+    });
+
+    const queueChannel = await client.channels.fetch(process.env.QUEUE_CHANNEL_ID);
+
+    const message = `_ _
+** **            <:000_1:1456193159678791897>    𐔌  ⊹    ✿.˚    ♡⸝⸝     ୭ ˚.  
+** **                  purchase  ―  lineup
+
+> ** ** <:000_1:1456193174002466924> ${buyer}  𓎟𓎟𓎟  ${channel}
+> ** ** <:000_1:1456193174002466924> ( ${quantity} )   ︵  **${item}**
+> ** ** <:000_1:1456193174002466924> via :  __${mop}__   ◞    \` ₱ ${price.toFixed(2)} \`
+> ** ** <:000_1:1456193174002466924> order is being : __${status}__
+-# ** **     <:0000_1:1456193237084536842>  order was catered by: ${seller} 
+_ _`;
+
+    await queueChannel.send({
+      content: message,
+      components: [makeButtons()]
+    });
+  }
+
+  if (interaction.isButton()) {
+    if (interaction.user.id !== process.env.OWNER_ID) {
+      return interaction.reply({
+        content: '❌ bawal ka pindot',
+        ephemeral: true
+      });
+    }
+
+    const status = interaction.customId;
+
+    let content = interaction.message.content.replace(
+      /order is being : __.*__/,
+      `order is being : __${status}__`
+    );
+
+    if (status === 'completed') {
+      const disabledRow = new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+          .setCustomId('done')
+          .setLabel('order has been delivered.')
+          .setStyle(ButtonStyle.Secondary)
+          .setDisabled(true)
+      );
+
+      return interaction.update({
+        content,
+        components: [disabledRow]
+      });
+    }
+
+    return interaction.update({
+      content,
+      components: [makeButtons()]
+    });
+  }
+});
+
+client.login(process.env.DISCORD_TOKEN);

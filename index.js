@@ -54,11 +54,11 @@ client.on('interactionCreate', async interaction => {
 _ _        ** ყour orძer hɑs ხeen queueძ** 
 _ _                  . ݁₊  ⊹  . ݁  <:bspider:1499062340086403213>   ݁ .  ⊹  ₊  ݁.
 
--# _ _        <:pearl:1485552109410713611> cancellations  are   not  allowed
+-# _ _        <:pearl:1483100606649602159> cancellations  are   not  allowed
 -# _ _        <:bend1:1485543789488508980> once   your    order    is    queued
--# _ _        <:pearl:1485552109410713611> be   patient   and   avoid  rushing 
+-# _ _        <:pearl:1483100606649602159> be   patient   and   avoid  rushing 
 -# _ _        <:bend1:1485543789488508980> the    order.    __**rush    =    void**__
--# _ _        <:pearl:1485552109410713611> processing    time      may      vary
+-# _ _        <:pearl:1483100606649602159> processing    time      may      vary
 -# _ _        <:bend1:1485543789488508980> depending    on    order    volume
 _ _`;
 

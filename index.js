@@ -101,48 +101,47 @@ client.on('interactionCreate', async interaction => {
       });
     }
 
-if (interaction.commandName === 'completed') {
-  const completedMessage = `‎ 
- ‎        ‎ ‎ ‎ ‎ ‎ 𓈒⠀𓂃⠀⠀˖⠀<a:012:1498135853577404548> ⠀˖⠀⠀𓂃⠀𓈒
+    if (interaction.commandName === 'completed') {
+      const completedMessage = `‎ 
+ ‎        ‎ ‎ ‎ ‎ ‎ 𓈒⠀𓂃⠀⠀˖⠀<a:flower_1:1500489961986723910> ⠀˖⠀⠀𓂃⠀𓈒
 ‎  ‎ ‎ ‎ ‎         ‎ ‎ ‎ yay ! your order is now
 ‎ ‎ ‎ ‎ ‎ ‎   ‎ ‎ ‎ ‎‎‎   ‎ ‎ ‎‎ ‎‎      ‎ ‎ ‎‎ ‎ ‎**__completed__**
 _ _
-_ _ ‎ <:pearl:1485552109410713611>type   **/vouch**  to  send   a vouch
-_ _ ‎ <:pearl:1485552109410713611>vouch     within     **12hours**    only
-     <:bend1:1485552343595356182>or     warranty     will     be    void[.](https://cdn.discordapp.com/attachments/1501118801339617401/1501188647557529681/IMG_1249.png?ex=69fb2a60&is=69f9d8e0&hm=a2a48e168d36901a7d2acd63a07d7abe2632111608c0dc632a265fada09b84a2&)
-_ _ ‎ <:pearl:1485552109410713611>tysm  for  trusting,  come  again!
-_ _
+_ _ ‎ <:pearl_1:1501187460024111135>type   **/vouch**  to  send   a vouch
+_ _ ‎ <:pearl_1:1501187460024111135>vouch     within     **12hours**    only
+     <:bend_1:1501187237151375463>or     warranty     will     be    void[.](https://cdn.discordapp.com/attachments/1501118801339617401/1501188647557529681/IMG_1249.png?ex=69fb2a60&is=69f9d8e0&hm=a2a48e168d36901a7d2acd63a07d7abe2632111608c0dc632a265fada09b84a2&)
+_ _ ‎ <:pearl_1:1501187460024111135>tysm  for  trusting,  come  again!
 _ _`;
 
-  await interaction.reply({
-    content: 'Completed notice posted.',
-    ephemeral: true
-  });
+      await interaction.reply({
+        content: 'Completed notice posted.',
+        ephemeral: true
+      });
 
-  return interaction.channel.send({
-    content: completedMessage
-  });
-}
+      return interaction.channel.send({
+        content: completedMessage
+      });
+    }
+
     if (interaction.commandName === 'mop') {
       const item = interaction.options.getString('item');
       const price = interaction.options.getNumber('price');
 
       const mopMessage = `_ _
 _ _ _ _ _ _ _ _ _ _ _ _             **gcɑsh ɗetɑils**
-_ _ _ _        𓎢𓎠𓎟<a:whitecross:1499062281013825618>𓎢𓎠𓎡<a:whitecross:1499062281013825618>𓎢𓎠𓎡
+_ _ _ _        𓎢𓎠𓎟<a:flower_1:1500489961986723910>𓎢𓎠𓎡<a:flower_1:1500489961986723910>𓎢𓎠𓎡
 _ _
--# _ _     <:pearl:1483100606649602159> please send your proof of payment
--# _ _     <:bend1:1485543789488508980> **no proof of payment = no process**
--# _ _     <:pearl:1483100606649602159> kindly  double   check  the  amount
--# _ _     <:bend1:1485543789488508980> before sending. **excess amt = no rf**
--# _ _     <:pearl:1483100606649602159> payment   are   non   —   refundable
--# _ _     <:bend1:1485543789488508980> once sent.  make sure you read the
--# _ _     <:bend1:1485543789488508980> the     **[rules](https://discord.com/channels/1455613450935079109/1455613451903832269)**     before     availing. <a:kkk_pinkb:1499060602516148295> 
+-# _ _     <:pearl_1:1501187460024111135> please send your proof of payment
+-# _ _     <:bend_1:1501187237151375463> **no proof of payment = no process**
+-# _ _     <:pearl_1:1501187460024111135> kindly  double   check  the  amount
+-# _ _     <:bend_1:1501187237151375463> before sending. **excess amt = no rf**
+-# _ _     <:pearl_1:1501187460024111135> payment   are   non   —   refundable
+-# _ _     <:bend_1:1501187237151375463> once sent.  make sure you read the
+-# _ _     <:bend_1:1501187237151375463> the     **[rules](https://discord.com/channels/1455613450935079109/1455613451903832269)**     before     availing. <:cutesy_001:1501141865905258527>   
+-# _ _ _ _ _ _    <a:crown_1:1501122940723396730> **press the button below for mop**
 
--# _ _ _ _ _ _    <:xnl_whitecash:1499062274265059509> **press the button below for mop**
-
--# _ _<:pearl:1483100606649602159> **item:** \`${item}\`
--# _ _<:pearl:1483100606649602159> **price:** \`₱${price.toFixed(2)}\`
+-# _ _<:pearl_1:1501187460024111135> **item:** \`${item}\`
+-# _ _<:pearl_1:1501187460024111135> **price:** \`₱${price.toFixed(2)}\`
 _ _`;
 
       await interaction.reply({
@@ -159,21 +158,21 @@ _ _`;
     if (interaction.commandName === 'queued') {
       const queuedMessage = `_ _      
 _ _        ** ყour orძer hɑs ხeen queueძ** 
-_ _                  . ݁₊  ⊹  . ݁  <:bspider:1499062340086403213>   ݁ .  ⊹  ₊  ݁.
+_ _                  . ݁₊  ⊹  . ݁  <a:lucia_dns1:1501122589970399362>    ݁ .  ⊹  ₊  ݁.
 
--# _ _        <:pearl:1483100606649602159> cancellations  are   not  allowed
--# _ _        <:bend1:1485543789488508980> once   your    order    is    queued
--# _ _        <:pearl:1483100606649602159> be   patient   and   avoid  rushing 
--# _ _        <:bend1:1485543789488508980> the    order.    __**rush    =    void**__
--# _ _        <:pearl:1483100606649602159> processing    time      may      vary
--# _ _        <:bend1:1485543789488508980> depending    on    order    volume
+-# _ _        <:pearl_1:1501187460024111135> cancellations  are   not  allowed
+-# _ _        <:bend_1:1501187237151375463> once   your    order    is    queued
+-# _ _        <:pearl_1:1501187460024111135> be   patient   and   avoid  rushing 
+-# _ _        <:bend_1:1501187237151375463> the    order.    __**rush    =    void**__
+-# _ _        <:pearl_1:1501187460024111135> processing    time      may      vary
+-# _ _        <:bend_1:1501187237151375463> depending    on    order    volume
 _ _`;
 
       const row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
           .setLabel('view here')
           .setStyle(ButtonStyle.Link)
-          .setURL(`https://discord.com/channels/${process.env.GUILD_ID}/1455627867529543813`)
+          .setURL(`https://discord.com/channels/${process.env.GUILD_ID}/1501109326176059393`)
       );
 
       await interaction.reply({
@@ -205,14 +204,14 @@ _ _`;
       const queueChannel = await client.channels.fetch(process.env.QUEUE_CHANNEL_ID);
 
       const message = `_ _
-** **            <:000_1:1456193159678791897>    𐔌  ⊹    ✿.˚    ♡⸝⸝     ୭ ˚.  
+** **            <a:aaa_1:1501121970228432936> 𐔌  ⊹    ✿.˚    ♡⸝⸝     ୭ ˚.  
 ** **                  purchase  ―  lineup
 
-> ** ** <:000_1:1456193174002466924> ${buyer}  𓎟𓎟𓎟  ${channel}
-> ** ** <:000_1:1456193174002466924> ( ${quantity} )   ︵  **${item}**
-> ** ** <:000_1:1456193174002466924> via :  __${mop}__   ◞    \` ₱ ${price.toFixed(2)} \`
-> ** ** <:000_1:1456193174002466924> order is being : __${status}__
--# ** **     <:0000_1:1456193237084536842>  order was catered by: ${seller} 
+> ** ** <a:heart_1:1501193566783930369> ${buyer}  𓎟𓎟𓎟  ${channel}
+> ** ** <a:heart_1:1501193566783930369> ( ${quantity} )   ︵  **${item}**
+> ** ** <a:heart_1:1501193566783930369> via :  __${mop}__   ◞    \` ₱ ${price.toFixed(2)} \`
+> ** ** <a:heart_1:1501193566783930369> order is being : __${status}__
+-# ** **     <a:flower_1:1500489961986723910>  order was catered by: ${seller} 
 _ _`;
 
       return queueChannel.send({
@@ -255,17 +254,18 @@ _ _`;
   if (interaction.isButton()) {
     if (interaction.customId !== 'gcash_mop') return;
 
-    const gcashMessage = `_ _              ── ✧ ── ⋆ ── ✧ ──
+    const gcashMessage = `_ _
+_ _              ── ✧ ── ⋆ ── ✧ ──
 -# _ _                     **gcash   payment**
 -# _ _                   \`0992 989 0833\`
 -# _ _              (tap the number to copy)
 
--# _ _   <:pearl:1483100606649602159>send   the  payment,  then  receipt
--# _ _  <:bend1:1485543789488508980> right  after. **no proof = no process**
--# _ _   <:pearl:1483100606649602159>forced refunds will have a ₱50 fee.
--# _ _   <:pearl:1483100606649602159>don’t   send    via    gcash    protect, 
--# _ _  <:bend1:1485543789488508980>  it      won’t      be      accepted[.](https://cdn.discordapp.com/attachments/1480092289232797789/1487036657231200266/IMG_9111.png?ex=69c7ae4e&is=69c65cce&hm=c9af89ec93e8daa9b1fca55dc12c3cba2ddbbafd22527b07fe4868ea7c02a007&)
--# _ _   <:pearl:1483100606649602159>tips    are    always    appreciated <:pink:1480218642082697309> 
+-# _ _   <:pearl_1:1501187460024111135>send   the  payment,  then  receipt
+-# _ _  <:bend_1:1501187237151375463> right  after. **no proof = no process**
+-# _ _   <:pearl_1:1501187460024111135>forced refunds will have a ₱50 fee.
+-# _ _   <:pearl_1:1501187460024111135>don’t   send    via    gcash    protect, 
+-# _ _  <:bend_1:1501187237151375463>  it      won’t      be      accepted[.](https://cdn.discordapp.com/attachments/1501118801339617401/1501198214764826745/IMG_1253.png?ex=69fb3349&is=69f9e1c9&hm=436b37599027f9a01421e5ff40b4c0c08ee9eb11a96417574d3a04fc18590f18&)
+-# _ _   <:pearl_1:1501187460024111135>tips    are    always    appreciated <:heart_0001:1501197839894577354>  
 _ _               ── ✧ ── ⋆ ── ✧ ──
 _ _`;
 

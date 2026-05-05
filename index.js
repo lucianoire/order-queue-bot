@@ -103,14 +103,15 @@ client.on('interactionCreate', async interaction => {
 
 if (interaction.commandName === 'completed') {
   const completedMessage = `‎ 
-‎ ‎        ‎ ‎ ‎ ‎ ‎ 𓈒⠀𓂃⠀⠀˖⠀<:pink_cross:1483503420349612215>   ⠀˖⠀⠀𓂃⠀𓈒
+ ‎        ‎ ‎ ‎ ‎ ‎ 𓈒⠀𓂃⠀⠀˖⠀<a:012:1498135853577404548> ⠀˖⠀⠀𓂃⠀𓈒
 ‎  ‎ ‎ ‎ ‎         ‎ ‎ ‎ yay ! your order is now
 ‎ ‎ ‎ ‎ ‎ ‎   ‎ ‎ ‎ ‎‎‎   ‎ ‎ ‎‎ ‎‎      ‎ ‎ ‎‎ ‎ ‎**__completed__**
-
-‎   ‎ <:000_1:1456193174002466924>type   **/vouch**  to  send   a vouch
-‎ ‎ ‎ ‎‎ <:000_1:1456193174002466924>vouch     within     **12hours**    only
-     <:bend1:1485543789488508980>or     warranty     will     be    void[.](https://cdn.discordapp.com/attachments/1480096108410568785/1492513162254090280/IMG_0263.png?ex=69db9ab3&is=69da4933&hm=9c727f4a944d3b7869eff674fa0545ad8dc6fa992c1ec8f71280bc89a7ff4b0a&)
-    <:000_1:1456193174002466924>tysm  for  trusting,  come  again!
+_ _
+_ _ ‎ <:pearl:1485552109410713611>type   **/vouch**  to  send   a vouch
+_ _ ‎ <:pearl:1485552109410713611>vouch     within     **12hours**    only
+     <:bend1:1485552343595356182>or     warranty     will     be    void[.](https://cdn.discordapp.com/attachments/1501118801339617401/1501188647557529681/IMG_1249.png?ex=69fb2a60&is=69f9d8e0&hm=a2a48e168d36901a7d2acd63a07d7abe2632111608c0dc632a265fada09b84a2&)
+_ _ ‎ <:pearl:1485552109410713611>tysm  for  trusting,  come  again!
+_ _
 _ _`;
 
   await interaction.reply({
